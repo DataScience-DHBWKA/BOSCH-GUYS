@@ -1,0 +1,71 @@
+\section{Data Preperation}
+
+In der Phase der Datenbereinigung werden umfangreiche Maßnahmen ergriffen, um Störungen und Inkonsistenzen in den uns vorliegenden Daten zu beseitigen. Dieser Prozess sichert die Qualität und Verlässlichkeit der analysierten Informationen, indem unpräzise oder nicht standardisierte Daten bearbeitet werden. Durch Umbenennen, Aggregieren und Bearbeiten der Datensätze wird eine solide Grundlage für weiterführende Analysen und Modelle geschaffen, die fundierte Einblicke in die Entwicklung der Elektromobilität in den USA ermöglichen.
+
+\subsection{Verwendete Python Bibliotheken}
+
+\begin{minted}[bgcolor=LightGray,breaklines]{python}
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import folium
+
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+from folium.plugins import HeatMap
+\end{minted}
+
+\subsection{Datensatz 1 - Vehicle Registrations}
+
+Wir haben die Fahrzeugregistrierungsdaten bearbeitet und die Spalte 'Electric (EV)' in 'Electric' umbenannt, Tausendertrennzeichen in numerischen Spalten entfernt und sie in int-Datentypen konvertiert. Zudem haben wir die Hybridfahrzeuge zur Spalte 'Hybrid', Diesel- und Benzinfahrzeuge zu 'Fuel' und alle anderen und unbekannten zu 'Other' aggregiert, indem wir Summen für jede Kategorie erstellt haben.
+
+\begin{minted}[bgcolor=LightGray,breaklines]{python}
+# dataset 1 - vehicle registrations
+registrations = pd.read_csv('data/vehicle_registrations.csv')
+
+registrations.rename(columns={'Electric (EV)': 'Electric'}, inplace=True)
+
+for column_name, values in registrations.items():
+    if column_name != 'State':
+        registrations[column_name] = registrations[column_name].replace({',': ''}, regex=True).astype(int)
+
+columns_to_remove = ['Plug-In Hybrid Electric (PHEV)', 'Hybrid Electric (HEV)']
+registrations['Hybrid'] = registrations[columns_to_remove].sum(axis=1)
+registrations.drop(columns=columns_to_remove, inplace=True)
+
+columns_to_remove = ['Gasoline', 'Diesel']
+registrations['Fuel'] = registrations[columns_to_remove].sum(axis=1)
+registrations.drop(columns=columns_to_remove, inplace=True)
+
+columns_to_remove = ['Biodiesel', 'Ethanol/Flex (E85)', 'Compressed Natural Gas (CNG)', 'Propane', 'Hydrogen', 'Methanol', 'Unknown Fuel']
+registrations['Other'] = registrations[columns_to_remove].sum(axis=1)
+registrations.drop(columns=columns_to_remove, inplace=True)
+\end{minted}
+
+\subsection{Datensatz 2 - Alternative Fuel Stations}
+
+Folgend haben wir die, für die weitere Analyse relevanten, Spalten ('State', 'Latitude', 'Longitude', 'Open Date') aus dem Datensatz zu alternativen Kraftstofftankstellen extrahiert. Zudem haben wir die  'Open Date'-Spalte in ein Datumsformat konvertiert, um uns zeitliche Analysen der Elektromobilitätsinfrastruktur in den USA zu ermöglichen.
+
+\begin{minted}[bgcolor=LightGray,breaklines]{python}
+# dataset 2 - alternative fuel stations
+columns_to_keep = ['State', 'Latitude', 'Longitude', 'Open Date']
+
+stations = pd.read_csv('data/alt_fuel_stations (Dec 2 2023).csv', usecols=columns_to_keep, engine='python')
+
+stations['Open Date'] = pd.to_datetime(stations['Open Date'], format='%Y-%m-%d')
+\end{minted}
+
+\subsection{Datensatz 3 - USA}
+
+An dieser Stelle lesen wir den Datensatz 'usa.csv' ein und passen die Spalten 'Population' und 'Land\_area' an, indem wir Tausendertrennzeichen entfernen und die resultierenden Zeichenketten in numerische Werte umwandelen.
+
+\begin{minted}[bgcolor=LightGray,breaklines]{python}
+# dataset 3 - USA
+usa = pd.read_csv('data/usa.csv')
+
+columns_to_int = ['Population', 'Land_area']
+usa[columns_to_int] = usa[columns_to_int].replace({',': ''}, regex=True).apply(pd.to_numeric)
+\end{minted}

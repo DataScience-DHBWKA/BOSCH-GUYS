@@ -1,0 +1,84 @@
+%Dokumentklasse
+\documentclass[a4paper,12pt]{scrartcl}
+\usepackage[left=2.5cm, right=2.1cm, top=3cm, bottom=2.5cm]{geometry}
+
+% Dokumentinformationen
+\usepackage[
+	pdftitle={Portfolio - Data Science},
+	pdfauthor={Jan Schulz-Schrade}
+]{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tocloft}
+
+\usepackage{minted}
+\usepackage{xcolor} % to access the named colour LightGray
+\definecolor{LightGray}{gray}{0.97}
+\setminted{fontsize=\scriptsize}
+
+\author{Kavak, Kelmendi, Schulz-Schrade }
+\date{\today}
+
+% -----------------------
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+\includegraphics[scale=0.3]{img/dhbw.svg.png}
+
+\vspace{3cm}
+{\huge Portfolio}
+
+\vspace{2cm}
+\begin{Huge}
+Elektromobilität in den USA \\
+\vspace{0.2cm}
+Entwicklungen und Unterschiede
+\end{Huge}
+
+\vspace{2cm}
+{\large WWI23B4 - Introduction to Data Science}
+
+\vspace{3cm}
+\begin{large}
+Kelmendi, Salih \\
+Kavak, Arzum \\
+Schulz-Schrade, Jan \\
+\end{large}
+
+\vspace{3cm}
+{\Large \today}
+
+\end{center}
+
+\clearpage
+
+% ------------------------
+
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\input{einleitung}
+
+\section{Business Understanding}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+\input{data_understanding}
+
+\input{data_preperation}
+
+\input{modelling}
+
+\section{Evaluation}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+\end{document}

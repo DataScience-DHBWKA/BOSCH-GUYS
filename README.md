@@ -1,5 +1,7 @@
 # BOSCH GUYS
 
-## Kelmendi, Salih
-## Kavak, Arzum
-## Schulz-Schrade, Jan
+## Elektromobilität in den USA - Entwicklungen und Unterschiede
+
++ Kelmendi, Salih
++ Kavak, Arzum
++ Schulz-Schrade, Jan
